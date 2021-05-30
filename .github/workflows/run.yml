@@ -1,0 +1,45 @@
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: '50 * * * *'
+  push:
+    branches:
+      - main
+
+env: 
+  REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+  REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_FILES_FILINGS}}
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+      
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.7.1' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+      
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Run Script to call external api
+        run: python call_api.py
+
+      - uses: sarisia/actions-status-discord@v1
+        if: failure()
+        with:
+          webhook: ${{ secrets.DISCORD_CODE_STATUS_WEBHOOK }}
+          status: ${{ job.status }}
+          title: ${{github.repository}}
+          description: "Build and deploy to GitHub Pages"
+          nofail: false
+          nocontext: false
+          noprefix: false
+          color: 0xff0000
+          username: GitHub Actions

@@ -1,0 +1,6 @@
+nltk
+graw
+numpy
+pandas
+matplotlib
+requests
