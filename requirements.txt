@@ -1,5 +1,5 @@
 nltk
-graw
+praw
 numpy
 pandas
 matplotlib
