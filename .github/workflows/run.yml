@@ -31,6 +31,11 @@ jobs:
       - name: Run Script for wsb
         run: python wsb.py
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: upload-artifact
+          path: Reddit_Sentiment_Equity.csv
+
       - uses: sarisia/actions-status-discord@v1
         if: failure()
         with:
