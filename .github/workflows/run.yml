@@ -28,8 +28,8 @@ jobs:
       - name: Install
         run: pip install -r requirements.txt
 
-      - name: Run Script to call external api
-        run: python call_api.py
+      - name: Run Script for wsb
+        run: python wsb.py
 
       - uses: sarisia/actions-status-discord@v1
         if: failure()
