@@ -27,9 +27,12 @@ nltk.download('stopwords')
 
 client_id = os.environ.get("REDDIT_CLIENT_ID")
 client_secret = os.environ.get("REDDIT_CLIENT_SECRET")
+username = os.environ.get("REDDIT_USERNAME")
+password = os.environ.get("REDDIT_PASSWORD")
 url = os.environ.get("DISCORD_WEBHOOK")
-reddit = praw.Reddit(client_id='*********',
-                    client_secret='******************',
+reddit = praw.Reddit(client_id=client_id,
+                    client_secret=client_secret,
+                    # user_name=
                     user_agent='dli-invest')
 
 
