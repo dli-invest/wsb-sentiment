@@ -1,7 +1,7 @@
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: '50 * * * *'
+    - cron: '50 7 * * *'
   push:
     branches:
       - main
