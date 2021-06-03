@@ -195,8 +195,7 @@ wsb_data = df.drop(columns=['date', 'latest_comment_date', 'domain', 'author'])
 # Create a visualization
 sns_plot = sns.pairplot(wsb_data, hue='ticker', size=2.5)
 
-imageBuf = StringIO()
-sns_plot.savefig(imageBuf, format="png")
-imageBuf.seek(0)
+sns_plot.savefig("sample.png", format="png")
+imageBuf = open('sample.png', 'rb')
 post_file_to_discord(url, imageBuf, "sentiment.png")
 # In[ ]:
