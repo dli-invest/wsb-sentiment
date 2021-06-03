@@ -41,7 +41,7 @@ reddit = praw.Reddit(client_id=client_id,
 
 
 sub_reddits = reddit.subreddit('wallstreetbets')
-stocks = ["BB", "GME", "AMC"]
+stocks = ["BB", "CLOV"]
 # stocks = ["SPCE", "LULU", "CCL", "SDC"]
 
 
