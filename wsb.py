@@ -7,6 +7,7 @@
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as SIA
 import praw
+import time
 import matplotlib.pyplot as plt
 import math
 import datetime as dt
@@ -15,7 +16,7 @@ import numpy as np
 import requests
 import os
 from io import StringIO
-
+import seaborn as sns
 # In[2]:
 
 
@@ -186,4 +187,16 @@ dfSentimentStocks.to_csv(buffer)  #filling that buffer
 buffer.seek(0) #set to the start of the stream
 
 post_file_to_discord(url, buffer, "Reddit_Sentiment_Equity.csv")
+
+df = dfSentimentStocks
+df.reset_index(drop=True, inplace=True)
+df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+wsb_data = df.drop(columns=['date', 'latest_comment_date', 'domain', 'author'])
+# Create a visualization
+sns_plot = sns.pairplot(wsb_data, hue='ticker', size=2.5)
+
+imageBuf = StringIO()
+sns_plot.savefig(imageBuf, format="png")
+imageBuf.seek(0)
+post_file_to_discord(url, imageBuf, "sentiment.png")
 # In[ ]:
